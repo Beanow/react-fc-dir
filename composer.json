@@ -1,0 +1,31 @@
+{
+    "name": "beanow/react-fc-dir",
+    "description": "Friendica directory, in ReactPHP",
+    "license": "GPL-2.0+",
+    "require": {
+        "php": ">=5.4.0",
+        "aura/project-kernel": "^2.1.0",
+        "monolog/monolog": "^1.0",
+        "psr/log": "^1.0.0",
+        "react/react": "0.4.x"
+    },
+    "autoload": {
+        "psr-4": {
+            "Friendica\\Directory\\": "src/",
+            "Friendica\\Directory\\_Config\\": "config/"
+        }
+    },
+    "extra": {
+        "aura": {
+            "type": "project",
+            "config": {
+                "common": "Friendica\\Directory\\_Config\\Common",
+                "dev": "Friendica\\Directory\\_Config\\Dev",
+                "prod": "Friendica\\Directory\\_Config\\Prod"
+            }
+        }
+    },
+    "config": {
+        "preferred-install": "source"
+    }
+}

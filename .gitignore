@@ -1,0 +1,7 @@
+# Composer related.
+/vendor
+composer.lock
+
+# Commit no temporary things.
+/tmp/log/*.log
+.fuse_
