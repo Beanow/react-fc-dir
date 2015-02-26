@@ -10,6 +10,11 @@ class Common extends Config
         $this->defineLogger($di);
         $this->defineReactServices($di);
         $this->defineKernel($di);
+
+        $di->setters['Friendica\Directory\Job\SayHello'] = array(
+            'setBaseUrl' => 'https://fc.oscp.info/',
+            'setHttpClient' => $di->lazyGet('react/react:http-client'),
+        );
     }
 
     public function defineKernel(Container $di)
