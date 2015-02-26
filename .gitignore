@@ -4,4 +4,4 @@ composer.lock
 
 # Commit no temporary things.
 /tmp/log/*.log
-.fuse_
+.fuse_hidden*
