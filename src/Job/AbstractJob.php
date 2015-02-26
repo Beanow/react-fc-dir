@@ -8,6 +8,7 @@ use Friendica\Directory\React\PromiseAwareInterface;
 use Friendica\Directory\React\PromiseAwareTrait;
 use Friendica\Directory\React\LoopAwareInterface;
 use Friendica\Directory\React\LoopAwareTrait;
+use React\Promise\PromiseInterface;
 
 /**
  * A Job that runs a certain non-blocking task.
@@ -62,7 +63,11 @@ abstract class AbstractJob implements JobInterface, LoggerAwareInterface, Promis
 
         try {
             $output = $this->run();
-            $deferred->resolve($output);
+            if ($output instanceof PromiseInterface) {
+                $output->then(function ($output) use ($deferred) {
+                    $deferred->resolve($output);
+                });
+            }
         } catch (Exception $ex) {
             $deferred->reject($ex);
         }

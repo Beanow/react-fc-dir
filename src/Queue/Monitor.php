@@ -75,7 +75,7 @@ class Monitor implements LoggerAwareInterface, LoopAwareInterface
     {
         $jobName = null;
 
-        return $this->queue->extract()
+        $this->queue->extract()
             ->then(function ($job) use (&$jobName) {
                 $jobName = get_class($job);
 
@@ -84,7 +84,12 @@ class Monitor implements LoggerAwareInterface, LoopAwareInterface
             ->then(null, function ($e) use ($jobName) {
                 $this->onFailedJob($jobName, $e);
             })
-            ->done(function () {return $this->runNextJob();});
+            ->done(function () {
+                //Use nextTick to break out of the nesting.
+                $this->loop->nextTick(function () {
+                    $this->runNextJob();
+                });
+            });
     }
 
     protected function onFailedJob($name, $e)

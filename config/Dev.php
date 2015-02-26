@@ -24,6 +24,11 @@ class Dev extends Config
                 array(null, null, true)
             ),
         );
+
+        //Restrict logging to a certain level.
+        $di->params['Monolog\Handler\StreamHandler'] = array(
+            'level' => 100, #\Monolog\Logger::DEBUG
+        );
     }
 
     public function modify(Container $di)

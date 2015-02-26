@@ -41,16 +41,16 @@ class Common extends Config
         }));
 
         $di->set('react/react:dns', $di->lazy(function () use ($di) {
-            return \React\Dns\Resolver\Factory::createCached(
-                $di->lazyValue('react/react:dns-server'),
-                $di->lazyGet('react/react:event-loop')
+            return (new \React\Dns\Resolver\Factory())->createCached(
+                $di->lazyValue('react/react:dns-server')->__invoke(),
+                $di->get('react/react:event-loop')
             );
         }));
 
         $di->set('react/react:http-client', $di->lazy(function () use ($di) {
-            return \React\HttpClient\Factory::create(
-                $di->lazyGet('react/react:event-loop'),
-                $di->lazyGet('react/react:dns')
+            return (new \React\HttpClient\Factory())->create(
+                $di->get('react/react:event-loop'),
+                $di->get('react/react:dns')
             );
         }));
 
